@@ -12,12 +12,11 @@
 📅 Duração: ~1 mês  
 🎯 Objetivo: Definir requisitos, preparar ambiente e criar base do sistema.  
 **Entregas:**
-- Definição do escopo detalhado e papéis da equipe.  
 - Configuração do repositório GitHub (monorepo ou separados).  
-- Setup do backend (API inicial com FastAPI/NestJS/.NET).  
-- Setup do frontend (Next.js + Tailwind/ShadCN/UI).  
+- Setup do backend (API inicial com .NET).  
+- Setup do frontend (Desenvolvimento do Figma e estruturação do projeto em Next.js).  
 - Criação do banco de dados inicial (PostgreSQL + tabelas principais).  
-- Prototipação das telas principais no Figma (login, dashboard, chat, KB).  
+- Prototipação das telas principais no Figma (login, dashboard, chat).  
 
 ---
 
@@ -29,9 +28,8 @@
 - Cadastro/Login/Logout de usuários.  
 - Página de **Base de Conhecimento** com CRUD de artigos.  
 - Suporte a **categorias e tags**.  
-- Estrutura para upload de documentos (PDF, DOCX, etc).  
-- Integração inicial do banco vetorial (pgvector ou ChromaDB).  
-
+- Estrutura para upload de documentos (PDF, DOCX, etc).
+  
 ---
 
 ### 🟠 Sprint 3 – Chat Inteligente com IA (MVP)  
@@ -40,8 +38,7 @@
 **Entregas:**
 - Página de **Chat Inteligente** no frontend.  
 - Histórico de conversas por usuário.  
-- Integração com modelo de IA (Ollama, Gemini ou OpenAI).  
-- Implementar RAG (busca semântica nos artigos cadastrados).  
+- Integração com modelo de IA (Ollama, Gemini ou OpenAI somente para teste das funcionalidades do frontend).  
 - Retorno da IA com citações das fontes.  
 - Testes iniciais com dados reais da empresa.  
 
@@ -74,7 +71,7 @@
 ---
 
 ## ✅ Resultado esperado
-Ao final das 5 sprints teremos um **Sistema Web de Banco de Conhecimentos Técnicos Inteligente (BCTI)** que permitirá:
+Ao final das 5 sprints teremos um **Sistema de Banco de Conhecimentos Técnicos Inteligente (BCTI)** que permitirá:
 - Centralizar e gerenciar conteúdos técnicos.  
 - Oferecer um **chat inteligente** que consulta dados internos.  
 - Suporte a **colaboração** entre usuários.  
