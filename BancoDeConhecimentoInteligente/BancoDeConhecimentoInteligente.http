@@ -1,0 +1,6 @@
+@BancoDeConhecimentoInteligente_HostAddress = http://localhost:5184
+
+GET {{BancoDeConhecimentoInteligente_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

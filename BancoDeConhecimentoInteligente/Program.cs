@@ -1,0 +1,102 @@
+using BancoDeConhecimentoInteligenteAPI.Data;
+//using BancoDeConhecimentoInteligenteAPI.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// EF Core
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Services
+//builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+// Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowedFrontend",
+    policy =>
+    {
+        policy.WithOrigins("http://192.168.15.70:3000", "http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BancoDeConhecimentoInteligenteAPI", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT como: Bearer {token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// Autenticação JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+        )
+    };
+});
+
+// Autorização
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseCors("AllowedFrontend");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.Run();
