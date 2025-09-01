@@ -4934,19 +4934,19 @@
     ]
   },
   "packageFolders": {
-    "/home/lucianojr/.nuget/packages/": {}
+    "/home/edujr/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
+      "projectUniqueName": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
       "projectName": "BancoDeConhecimentoInteligente",
-      "projectPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
-      "packagesPath": "/home/lucianojr/.nuget/packages/",
-      "outputPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/",
+      "projectPath": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
+      "packagesPath": "/home/edujr/.nuget/packages/",
+      "outputPath": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/lucianojr/.nuget/NuGet/NuGet.Config"
+        "/home/edujr/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -5026,7 +5026,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/edujr/.dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
