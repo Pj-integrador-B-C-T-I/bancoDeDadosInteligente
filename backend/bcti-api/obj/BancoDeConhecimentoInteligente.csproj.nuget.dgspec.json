@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {}
+    "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {}
   },
   "projects": {
-    "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {
+    "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
+        "projectUniqueName": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
         "projectName": "BancoDeConhecimentoInteligente",
-        "projectPath": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
-        "packagesPath": "/home/edujr/.nuget/packages/",
-        "outputPath": "/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/",
+        "projectPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
+        "packagesPath": "/home/lucianojr/.nuget/packages/",
+        "outputPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/edujr/.nuget/NuGet/NuGet.Config"
+          "/home/lucianojr/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -44,6 +44,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[9.0.8, )"
@@ -70,6 +74,10 @@
               "target": "Package",
               "version": "[9.0.4, )"
             },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.29.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[9.0.4, )"
@@ -94,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/edujr/.dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

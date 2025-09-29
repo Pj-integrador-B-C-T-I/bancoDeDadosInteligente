@@ -674,3 +674,8 @@
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.pdb
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.genruntimeconfig.cache
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/ref/BancoDeConhecimentoInteligente.dll
+/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/Newtonsoft.Json.dll
+/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/SendGrid.dll
+/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/StarkbankEcdsa.dll
+/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/DotNetEnv.dll
+/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/Sprache.dll

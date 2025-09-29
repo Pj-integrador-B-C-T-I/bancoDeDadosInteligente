@@ -1,19 +1,29 @@
 using BancoDeConhecimentoInteligenteAPI.Data;
-//using BancoDeConhecimentoInteligenteAPI.Services;
+using BancoDeConhecimentoInteligenteAPI.Services;
+using BancoDeConhecimentoInteligenteAPI.Services.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
+
+string sendGridKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
 // EF Core
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Services
-//builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, SendGridEmailService>();
+
 
 
 // Cors
