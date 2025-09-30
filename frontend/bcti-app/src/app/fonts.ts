@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Lexend_Exa, Montserrat, Julius_Sans_One, Merriweather_Sans, Purple_Purse } from "next/font/google";
+import { Geist, Geist_Mono, Lexend_Exa, Montserrat, Julius_Sans_One, Merriweather_Sans, Purple_Purse, Poppins } from "next/font/google";
 
 export const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,4 +34,10 @@ export const juliusSansOne = Julius_Sans_One({
 
 export const montSerrat = Montserrat({
   subsets: ['latin'],
+});
+
+export const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
