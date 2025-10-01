@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BancoDeConhecimentoInteligente")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85d84e89a784e3abbf8541676ff7a670e3fdd676")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+666f0b3853bbe79daea573343479a50af61fb5b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("BancoDeConhecimentoInteligente")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BancoDeConhecimentoInteligente")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

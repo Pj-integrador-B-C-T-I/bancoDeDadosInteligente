@@ -1,11 +1,10 @@
 import { purplePurse } from "@/app/fonts";
 
 interface AuthLayoutProps {
-  children: React.ReactNode;
-  text?: string; 
+  children: React.ReactNode; 
 }
 
-export default function AuthLayout({ children}: AuthLayoutProps) {
+export default function AuthLayout({children}: AuthLayoutProps) {
   return (
     <div className="flex h-screen w-screen items-center justify-start">
       {/* Lado esquerdo com logo */}

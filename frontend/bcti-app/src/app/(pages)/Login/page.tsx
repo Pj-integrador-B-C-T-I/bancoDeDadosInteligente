@@ -1,5 +1,6 @@
 import AuthLayout from "@/components/shared/AuthLayout";
 
+
 export default function LoginPage() {
   return (
     <AuthLayout>
