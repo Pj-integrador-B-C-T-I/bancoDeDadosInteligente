@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {}
+    "C:\\Users\\Victor\\Documents\\bancoDeDadosInteligente\\backend\\bcti-api\\BancoDeConhecimentoInteligente.csproj": {}
   },
   "projects": {
-    "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj": {
+    "C:\\Users\\Victor\\Documents\\bancoDeDadosInteligente\\backend\\bcti-api\\BancoDeConhecimentoInteligente.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
+        "projectUniqueName": "C:\\Users\\Victor\\Documents\\bancoDeDadosInteligente\\backend\\bcti-api\\BancoDeConhecimentoInteligente.csproj",
         "projectName": "BancoDeConhecimentoInteligente",
-        "projectPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/BancoDeConhecimentoInteligente.csproj",
-        "packagesPath": "/home/lucianojr/.nuget/packages/",
-        "outputPath": "/home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/",
+        "projectPath": "C:\\Users\\Victor\\Documents\\bancoDeDadosInteligente\\backend\\bcti-api\\BancoDeConhecimentoInteligente.csproj",
+        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Victor\\Documents\\bancoDeDadosInteligente\\backend\\bcti-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/lucianojr/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -102,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
