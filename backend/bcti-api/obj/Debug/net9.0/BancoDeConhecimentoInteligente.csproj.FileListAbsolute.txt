@@ -652,7 +652,6 @@
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.csproj.AssemblyReference.cache
-/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/rpswa.dswa.cache.json
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.GeneratedMSBuildEditorConfig.editorconfig
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.AssemblyInfoInputs.cache
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.AssemblyInfo.cs
@@ -660,12 +659,8 @@
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.MvcApplicationPartsAssemblyInfo.cs
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.MvcApplicationPartsAssemblyInfo.cache
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeConhecimentoInteligente.sourcelink.json
-/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/rjimswa.dswa.cache.json
-/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
-/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/scopedcss/bundle/BancoDeConhecimentoInteligente.styles.css
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets.build.json
-/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets.build.json.cache
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets.development.json
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets.build.endpoints.json
 /home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/BancoDeC.478E7059.Up2Date
@@ -679,6 +674,7 @@
 /home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/StarkbankEcdsa.dll
 /home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/DotNetEnv.dll
 /home/lucianojr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/Sprache.dll
+<<<<<<< HEAD
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\bin\Debug\net9.0\appsettings.json
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\bin\Debug\net9.0\BancoDeConhecimentoInteligente.staticwebassets.endpoints.json
@@ -856,3 +852,18 @@ C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\obj\Debug\net
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\obj\Debug\net9.0\BancoDeConhecimentoInteligente.pdb
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\obj\Debug\net9.0\BancoDeConhecimentoInteligente.genruntimeconfig.cache
 C:\Users\Victor\Documents\bancoDeDadosInteligente\backend\bcti-api\obj\Debug\net9.0\ref\BancoDeConhecimentoInteligente.dll
+=======
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/DotNetEnv.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/Newtonsoft.Json.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/SendGrid.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/Sprache.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/StarkbankEcdsa.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/System.Formats.Asn1.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/bin/Debug/net9.0/System.Text.Json.dll
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets/msbuild.BancoDeConhecimentoInteligente.Microsoft.AspNetCore.StaticWebAssets.props
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets/msbuild.BancoDeConhecimentoInteligente.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets/msbuild.build.BancoDeConhecimentoInteligente.props
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets/msbuild.buildMultiTargeting.BancoDeConhecimentoInteligente.props
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets/msbuild.buildTransitive.BancoDeConhecimentoInteligente.props
+/home/edujr/Documentos/bancoDeDadosInteligente/backend/bcti-api/obj/Debug/net9.0/staticwebassets.pack.json
+>>>>>>> 4af5f597a50225a67933d7d2a4d40dc0127f8138
