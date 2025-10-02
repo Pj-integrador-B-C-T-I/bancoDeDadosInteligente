@@ -1,10 +1,21 @@
 import { FC } from "react";
+import Inboxes from "@/components/home/icons/inboxes";
+import Stars from "@/components/home/icons/Stars";
+import ChatLeftText from "@/components/home/icons/chatLeftText";
 
 interface IconBoxProps {
-  icon?: FC; // componente React
+  icon?: "chat" | "stars" | "inbox";
 }
 
-export default function IconBox({ icon: Icon }: IconBoxProps) {
+const iconsMap: Record<NonNullable<IconBoxProps["icon"]>, FC> = {
+  chat: ChatLeftText,
+  stars: Stars,
+  inbox: Inboxes,
+};
+
+export default function IconBox({ icon }: IconBoxProps) {
+  const Icon = icon ? iconsMap[icon] : null;
+
   return (
     <div className="w-40 h-40 flex items-end justify-center relative">
       {/* Linha vertical */}

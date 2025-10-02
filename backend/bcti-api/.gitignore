@@ -1,3 +1,40 @@
-**/obj/
+# Build
 **/bin/
+**/obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# Rider / JetBrains
+.idea/
+
+# Logs
+*.log
+
+# Environment variables
 .env
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+*.dll
+*.pdb
+
+# Publish outputs
+**/publish/
+**/out/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Others
+launchSettings.json
