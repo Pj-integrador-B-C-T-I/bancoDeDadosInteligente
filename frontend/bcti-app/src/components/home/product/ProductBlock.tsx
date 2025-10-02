@@ -1,4 +1,4 @@
-import IconBox from "@/components/IconBox";
+import IconBox from "@/components/home/icons/IconBox";
 
 interface ProductBlockProps {
   icon: "chat" | "stars" | "inbox";
