@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace BancoDeConhecimentoInteligenteAPI.Controllers
 {
@@ -60,6 +61,29 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
                 var token = await _authService.LoginAsync(dto);
 
                 var usuario = await _context.Usuarios.FirstAsync(u => u.Email == dto.Email);
+
+                string timeZoneId = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? "E. South America Standard Time"
+                    : "America/Sao_Paulo";
+
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+                var dataLocal = TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, tz);
+
+
+                // 📨 Enviar e-mail de aviso de login
+                var titulo = "Login realizado com sucesso";
+                var subtitulo = $"Detectamos um login na sua conta em {dataLocal:dd/MM/yyyy HH:mm} (horário de Brasília).";
+                var textoBotao = "Ver minha conta";
+                var link = _config["AppUrl"] ?? "https://alure.app"; // ou qualquer URL que leve para a conta do usuário
+
+                await _emailService.EnviarEmailAsync(
+                    usuario.Email,
+                    usuario.Nome,
+                    titulo,
+                    subtitulo,
+                    textoBotao,
+                    link
+                );
 
                 return Ok(new AuthResponseDto
                 {
