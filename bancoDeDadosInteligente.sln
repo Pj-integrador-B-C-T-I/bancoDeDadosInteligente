@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoDeConhecimentoInteligente", "backend\bcti-api\BancoDeConhecimentoInteligente.csproj", "{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAD2B744-C3A7-CF0B-9DF6-7000308E36AB} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+
+		SolutionGuid = {078B3FF8-F4BD-4CE4-B3FA-BCD753BA42B7}
+	EndGlobalSection
+EndGlobal

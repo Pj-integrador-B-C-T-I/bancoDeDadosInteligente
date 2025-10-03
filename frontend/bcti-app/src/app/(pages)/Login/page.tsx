@@ -88,7 +88,7 @@ export default function LoginPage() {
                 <p className="flex items-center justify-end text-sm text-black">
                   Não tem uma conta?
                   <Link
-                    href="/register"
+                    href="/Cadastro"
                     className="ml-1 hover:underline"
                   >
                     Faça Cadastro
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 <p className="flex items-center text-sm justify-end text-black">
                   Esqueceu a senha?
                   <Link
-                    href="/forgot-password"
+                    href="/esqueci-minha-senha"
                     className="ml-1 hover:underline"
                   >
                     Clique aqui

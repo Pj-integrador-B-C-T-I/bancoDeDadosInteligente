@@ -110,7 +110,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            var link = $"{_configuration["AppUrl"]}/RedefinirSenha?token={Uri.EscapeDataString(tokenString)}";
+            var link = $"{_configuration["AppUrl"]}/redefinir-senha?token={Uri.EscapeDataString(tokenString)}";
 
             await _emailService.EnviarEmailAsync(
                 usuario.Email,

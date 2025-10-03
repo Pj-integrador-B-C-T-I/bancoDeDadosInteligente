@@ -15,12 +15,22 @@ import { Fade as Hamburger } from "hamburger-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import {jwtDecode} from "jwt-decode";
 
 interface UserData {
   id: number;
   nome: string;
   email: string;
 }
+
+interface JwtPayload {
+  nameid: string; // ClaimTypes.NameIdentifier
+  unique_name?: string; // ClaimTypes.Name
+  email: string; // ClaimTypes.Email
+  role: string; // ClaimTypes.Role
+  exp: number;
+}
+
 
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
@@ -29,51 +39,53 @@ export default function Navbar() {
   const [loading, setLoading] = useState(true);
   const [relatoriosOpen, setRelatoriosOpen] = useState(false);
 
-  // Verificar se usuário está logado
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    const userStr = localStorage.getItem("user");
-
-    setIsLoggedIn(!!token);
-
-    if (token && userId) {
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          setUserData(user);
-        } catch (err) {
-          console.error("Erro ao parsear dados do usuário:", err);
-        }
-      }
-      fetchUserData(userId, token);
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
-  const fetchUserData = async (userId: string, token: string) => {
+  const getUserFromToken = (token: string): UserData | null => {
     try {
-      setLoading(true);
-      const response = await fetch(`/api/usuario/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const decoded: JwtPayload = jwtDecode(token);
 
-      if (response.ok) {
-        const userDataFromApi: UserData = await response.json();
-        setUserData(userDataFromApi);
-        localStorage.setItem("user", JSON.stringify(userDataFromApi));
-      } else {
-        console.error("Erro ao buscar dados do usuário:", response.status);
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-    } finally {
-      setLoading(false);
+      return {
+        id: parseInt(decoded.nameid),
+        nome: decoded.unique_name || "",
+        email: decoded.email,
+      };
+    } catch (err) {
+      console.error("Erro ao decodificar token:", err);
+      return null;
     }
   };
+
+  
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsLoggedIn(true);
+
+      // Tenta recuperar usuário do localStorage
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        try {
+          setUserData(JSON.parse(userStr));
+        } catch (err) {
+          console.error("Erro ao parsear user do localStorage:", err);
+        }
+      } else {
+        // Se não tiver no localStorage, decodifica direto do token
+        const user = getUserFromToken(token);
+        if (user) {
+          setUserData(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+      }
+    } else {
+      setIsLoggedIn(false);
+      setUserData(null);
+    }
+
+    setLoading(false);
+  }, []);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -102,7 +114,7 @@ export default function Navbar() {
   return (
     <div>
       {/* Navbar */}
-      <div className="w-screen bg-[#031926] p-2 flex flex-row justify-between items-center gap-4">
+      <div className="w-screen bg-[#031926] py-2 px-5 flex flex-row justify-between items-center gap-4">
         {/* Botão hambúrguer */}
         <Hamburger toggled={isOpen} toggle={setOpen} color="#FFF" rounded />
 

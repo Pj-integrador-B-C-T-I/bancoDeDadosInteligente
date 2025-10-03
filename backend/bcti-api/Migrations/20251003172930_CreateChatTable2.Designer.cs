@@ -3,6 +3,7 @@ using System;
 using BancoDeConhecimentoInteligenteAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BancoDeConhecimentoInteligente.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251003172930_CreateChatTable2")]
+    partial class CreateChatTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace BancoDeConhecimentoInteligente.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistory", b =>
+            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistorico", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,25 +33,25 @@ namespace BancoDeConhecimentoInteligente.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CriadoEm")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Question")
+                    b.Property<string>("Pergunta")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Resposta")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsuarioId");
 
-                    b.ToTable("ChatHistories");
+                    b.ToTable("ChatHistoricos");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Usuario", b =>
@@ -97,15 +100,15 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistory", b =>
+            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistorico", b =>
                 {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Usuario", "User")
+                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }
