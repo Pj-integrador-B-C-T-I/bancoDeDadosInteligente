@@ -74,7 +74,7 @@ export default function EsqueciMinhaSenhaPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button 
-              className="w-full mt-4 bg-[#5680BA] cursor-pointer hover:bg-[#5680BA]/90"
+              className="w-full mt-4 bg-[#5680ba] cursor-pointer hover:bg-[#5680BA]/90"
               type="submit"
               disabled={sending}
             >
