@@ -1,4 +1,3 @@
 **/obj/
 **/bin/
 .env
-appsettings.json
