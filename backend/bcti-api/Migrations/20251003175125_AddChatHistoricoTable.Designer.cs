@@ -3,6 +3,7 @@ using System;
 using BancoDeConhecimentoInteligenteAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BancoDeConhecimentoInteligente.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251003175125_AddChatHistoricoTable")]
+    partial class AddChatHistoricoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace BancoDeConhecimentoInteligente.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistory", b =>
+            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistorico", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +51,7 @@ namespace BancoDeConhecimentoInteligente.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatHistories");
+                    b.ToTable("ChatHistoricos");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Usuario", b =>
@@ -97,7 +100,7 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistory", b =>
+            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatHistorico", b =>
                 {
                     b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Usuario", "User")
                         .WithMany()
