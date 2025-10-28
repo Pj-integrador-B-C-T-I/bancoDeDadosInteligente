@@ -114,7 +114,7 @@ export default function Navbar() {
   return (
     <div>
       {/* Navbar */}
-      <div className="w-screen bg-[#031926] py-2 px-5 flex flex-row justify-between items-center gap-4">
+      <div className="w-screen bg-[#031926] py-5 px-9 flex flex-row justify-between items-center gap-4">
         {/* Botão hambúrguer */}
         <Hamburger toggled={isOpen} toggle={setOpen} color="#FFF" rounded />
 

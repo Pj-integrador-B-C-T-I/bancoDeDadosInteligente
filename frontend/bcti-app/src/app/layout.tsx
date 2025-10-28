@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={
-      `${geistSans.className} ${geistMono.className} ${lexendExa.className} ${juliusSansOne.className} ${montSerrat.className}`
+      `${geistSans.className} ${geistMono.className} ${lexendExa.className} ${juliusSansOne.className} ${montSerrat.className} overflow-x-hidden`
     }>
       <div className="min-h-screen flex flex-col">      
         {children}

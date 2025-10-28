@@ -141,4 +141,14 @@
   body {
     @apply bg-background text-foreground;
   }
+
+    /* Oculta a scrollbar sem remover o scroll */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
 }
