@@ -104,8 +104,7 @@ export default function Navbar() {
       icon: BarChart3,
       label: "Relatórios",
       dropdown: [
-        { label: "Adicionar Relatórios", href: "/Relatorios/Adicionar" },
-        { label: "Visualizar Relatórios", href: "/Relatorios/Visualizar" },
+        { label: "Visualizar Relatórios", href: "/Relatorios" },
       ],
     },
     { icon: MessageCircle, label: "Chat", href: "/Chat", requiresAuth: true },
@@ -125,7 +124,7 @@ export default function Navbar() {
           </h1>
         </Link>
 
-        <div className="w-10 h-10 rounded-full bg-gray-500" />
+        
       </div>
 
       {/* Menu Overlay */}

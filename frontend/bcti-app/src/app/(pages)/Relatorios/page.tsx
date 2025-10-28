@@ -1,57 +1,68 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { poppins } from "@/app/fonts";
 import ArticleCard from "@/components/ArticleCard";
 import Navbar from "@/components/Navbar";
 
+interface Article {
+  id: number;
+  title: string;
+  description: string;
+  content?: string;
+  authorId?: number;
+  categoryId?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export default function ArticlePage() {
+  const [artigos, setArtigos] = useState<Article[]>([]);
 
-  const produtos = [
-        {
-        titulo: "Pizza de Barata ao Molho de Salsicha",
-        descricao: "Pizza feita com crosta crocante de barata desidratada e molho especial de salsicha velha, com queijo fundido e presunto que passou do prazo de validade. ",
-        },
-        {
-            titulo: "Suco de Meia Suada de Algodão",
-            descricao: "Suco 100% natural feito com frutas frescas e uma pitada especial de meia suada de algodão.",
-        },
-        {
-            titulo: "Sopa de Cabelo de Laranja",
-            descricao: "Uma sopa cremosa feita com caldo de legumes e pedaços de cabelo de laranja, aquele toque gourmet que só os chefs mais ousados conhecem. ",
-        },
-        {
-            titulo: "Hambúrguer de Pão de Queijo com Restos de Peixe",
-            descricao: "Hambúrguer com pão de queijo caseiro e uma mistura de peixe do dia, combinado com o que sobrou do almoço do chef. ",
-        },
-        {
-            titulo: "Sorvete de Maçã Podre com Granulado de Mofo",
-            descricao: "Sorvete artesanal feito com maçãs cuidadosamente escolhidas (podres, é claro) e granulado de mofo envelhecido. ",
-        },
+  useEffect(() => {
+    async function fetchArtigos() {
+      try {
+        const response = await fetch("http://localhost:5184/api/Article");
+        if (!response.ok) {
+          throw new Error("Erro ao buscar artigos");
+        }
+        const data: Article[] = await response.json();
+        setArtigos(data);
+      } catch (error) {
+        console.error("Erro na requisição:", error);
+      }
+    }
 
-    ]
+    fetchArtigos();
+  }, []);
+
   return (
-    <div className={`${poppins.className} w-screen items-center justify-center flex flex-col gap-16`}>
+    <div
+      className={`${poppins.className} w-screen min-h-screen flex flex-col items-center bg-white overflow-x-hidden`}
+    >
       <Navbar />
-      <div className="">
-        <p className="text-3xl font-bold text-gray-400 text-center">
+      <div className="w-full pl-4 mt-8">
+        <h1 className="text-lg sm:text-xl pl-4 font-bold text-black">
+          Relatórios Disponíveis
+        </h1>
+        <hr className="border-1 w-[20%] sm:w-[10%] border-black my-1" />
+      </div>
+      <div>
+        <p className="text-xl sm:text-2xl font-bold text-gray-400 text-center mt-6 mb-6 cursor-pointer">
           Adicionar Novo Relatório
         </p>
       </div>
-
-      <div className=" pb-2 flex gap-5 overflow-auto w-[80vw] bg-amber-300">
-        <div className="pb-2 flex gap-5 overflow-x-auto overflow-y-hidden w-[80vw] bg-amber-300 scrollbar-hide">
-                          
-          {
-            produtos.map((index,key)=>{
-                return(
-                    <div key={key}>
-                        <ArticleCard />
-                    </div>
-                )
-            })
-          }
-        </div>
-          
+      <div
+        className="flex flex-wrap justify-center gap-8 sm:gap-10 md:gap-12 
+                   w-[90vw] sm:w-[85vw] lg:w-[80vw] pb-10"
+      >
+        {artigos.map((artigo) => (
+          <ArticleCard
+            key={artigo.id}
+            title={artigo.title}
+            description={artigo.description}
+          />
+        ))}
       </div>
     </div>
   );
