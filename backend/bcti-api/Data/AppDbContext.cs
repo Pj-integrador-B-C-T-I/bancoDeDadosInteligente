@@ -10,6 +10,9 @@ namespace BancoDeConhecimentoInteligenteAPI.Data
         public DbSet<ChatHistory> ChatHistories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+
 
     }
 }

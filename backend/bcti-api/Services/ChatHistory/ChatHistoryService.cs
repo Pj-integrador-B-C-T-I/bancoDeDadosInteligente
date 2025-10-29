@@ -94,5 +94,24 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<ReadChatHistoryDto?> UpdateAnswerAsync(int id, string newAnswer)
+        {
+            var chat = await _context.ChatHistories.FindAsync(id);
+            if (chat == null) return null;
+
+            chat.Answer = newAnswer;
+            await _context.SaveChangesAsync();
+
+            return new ReadChatHistoryDto
+            {
+                Id = chat.Id,
+                UserId = chat.UserId,
+                Question = chat.Question,
+                Answer = chat.Answer,
+                CreateAt = chat.CreateAt
+            };
+        }
+
     }
 }

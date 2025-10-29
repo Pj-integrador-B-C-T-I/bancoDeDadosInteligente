@@ -11,5 +11,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
         Task<IEnumerable<ReadChatHistoryDto>> GetByUserIdAsync(int UserId);
         Task<ReadChatHistoryDto> GetByIdAsync(int id);
         Task<bool> RemoveByIdAsync(int id);
+        Task<ReadChatHistoryDto?> UpdateAnswerAsync(int id, string newAnswer);
+
     }
 }

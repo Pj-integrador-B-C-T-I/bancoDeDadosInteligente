@@ -18,4 +18,9 @@ namespace BancoDeConhecimentoInteligenteAPI.Dtos.ChatHistory
         public DateTime CreateAt { get; set; }
     }
 
+    public class UpdateChatHistoryDto
+    {
+        public string Answer { get; set; }
+    }
+
 }

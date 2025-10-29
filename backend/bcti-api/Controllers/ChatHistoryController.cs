@@ -59,5 +59,19 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
             if (!removed) return NotFound();
             return NoContent();
         }
+
+        // PATCH: api/ChatHistory/5/answer
+        [HttpPatch("{id}/answer")]
+        public async Task<ActionResult<ReadChatHistoryDto>> UpdateAnswer(int id, [FromBody] UpdateChatHistoryDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Answer))
+                return BadRequest("A resposta não pode ser vazia.");
+
+            var updatedChat = await _chatHistoryService.UpdateAnswerAsync(id, dto.Answer);
+            if (updatedChat == null) return NotFound("Histórico de chat não encontrado.");
+
+            return Ok(updatedChat);
+        }
+
     }
 }

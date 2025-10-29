@@ -27,10 +27,8 @@ builder.Services.AddScoped<IChatHistoryService, ChatHistoryService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
-
-
-
-
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChatMessageService, ChatMessageService>();
 
 // Cors
 builder.Services.AddCors(options =>
