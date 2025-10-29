@@ -123,7 +123,7 @@ export default function Navbar() {
             CT.IA
           </h1>
         </Link>
-
+       
         
       </div>
 
