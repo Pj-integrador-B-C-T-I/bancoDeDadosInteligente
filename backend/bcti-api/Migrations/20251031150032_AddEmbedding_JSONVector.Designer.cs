@@ -3,6 +3,7 @@ using System;
 using BancoDeConhecimentoInteligenteAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BancoDeConhecimentoInteligente.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251031150032_AddEmbedding_JSONVector")]
+    partial class AddEmbedding_JSONVector
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +24,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Answer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId")
-                        .IsUnique();
-
-                    b.ToTable("Answers");
-                });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Article", b =>
                 {
@@ -89,21 +66,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ArticleTag", b =>
-                {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ArticleId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("ArticleTags");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Category", b =>
@@ -207,39 +169,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.ToTable("ChatMessages");
                 });
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Document", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FileType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("Documents");
-                });
-
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Embedding", b =>
                 {
                     b.Property<int>("Id")
@@ -265,7 +194,7 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.Property<int?>("SourceId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("VectorJson")
+                    b.Property<string>("Vector")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -274,93 +203,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Embeddings");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.LogReport", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AuthorId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ErrorType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Resolution")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SystemAffected")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("LogReports");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Question", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Usuario", b =>
@@ -409,17 +251,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Answer", b =>
-                {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Question", "Question")
-                        .WithOne("Answer")
-                        .HasForeignKey("BancoDeConhecimentoInteligenteAPI.Models.Answer", "QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Article", b =>
                 {
                     b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Usuario", "Author")
@@ -437,25 +268,6 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ArticleTag", b =>
-                {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Article", "Article")
-                        .WithMany("ArticleTags")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Tag", "Tag")
-                        .WithMany("ArticleTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Chat", b =>
@@ -483,23 +295,12 @@ namespace BancoDeConhecimentoInteligente.Migrations
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.ChatMessage", b =>
                 {
                     b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Chat", "Chat")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Chat");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Document", b =>
-                {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Embedding", b =>
@@ -511,45 +312,9 @@ namespace BancoDeConhecimentoInteligente.Migrations
                     b.Navigation("Article");
                 });
 
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.LogReport", b =>
-                {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Usuario", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
-
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Question", b =>
-                {
-                    b.HasOne("BancoDeConhecimentoInteligenteAPI.Models.Chat", "Chat")
-                        .WithMany("Questions")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Article", b =>
-                {
-                    b.Navigation("ArticleTags");
-                });
-
             modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Chat", b =>
                 {
-                    b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Question", b =>
-                {
-                    b.Navigation("Answer")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BancoDeConhecimentoInteligenteAPI.Models.Tag", b =>
-                {
-                    b.Navigation("ArticleTags");
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

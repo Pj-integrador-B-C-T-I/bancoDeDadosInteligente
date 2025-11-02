@@ -20,7 +20,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Relacionamento 1:N com mensagens
-        public ICollection<ChatMessage> Messages { get; set; }
+        // Relacionamento 1:N com perguntas
+        public ICollection<Question> Questions { get; set; } = new List<Question>();
     }
 }

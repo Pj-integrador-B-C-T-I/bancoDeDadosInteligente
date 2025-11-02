@@ -6,7 +6,10 @@ namespace BancoDeConhecimentoInteligenteAPI.Dtos
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
+
         public int AuthorId { get; set; }
+        public string? AuthorName { get; set; }
+
         public int CategoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

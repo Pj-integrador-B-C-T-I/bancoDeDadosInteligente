@@ -1,7 +1,6 @@
 using BancoDeConhecimentoInteligenteAPI.Data;
 using BancoDeConhecimentoInteligenteAPI.Dtos;
 using BancoDeConhecimentoInteligenteAPI.Models;
-using BancoDeConhecimentoInteligenteAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BancoDeConhecimentoInteligenteAPI.Services
@@ -18,6 +17,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
         public async Task<IEnumerable<ArticleDto>> GetAllAsync()
         {
             return await _context.Articles
+                .Include(a => a.Author) 
                 .Select(a => new ArticleDto
                 {
                     Id = a.Id,
@@ -25,6 +25,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
                     Description = a.Description,
                     Content = a.Content,
                     AuthorId = a.AuthorId,
+                    AuthorName = a.Author != null ? a.Author.Nome : string.Empty,
                     CategoryId = a.CategoryId,
                     CreatedAt = a.CreatedAt,
                     UpdatedAt = a.UpdatedAt
@@ -34,7 +35,10 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
 
         public async Task<ArticleDto?> GetByIdAsync(int id)
         {
-            var article = await _context.Articles.FindAsync(id);
+            var article = await _context.Articles
+                .Include(a => a.Author)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             if (article == null) return null;
 
             return new ArticleDto
@@ -44,6 +48,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
                 Description = article.Description,
                 Content = article.Content,
                 AuthorId = article.AuthorId,
+                AuthorName = article.Author?.Nome,
                 CategoryId = article.CategoryId,
                 CreatedAt = article.CreatedAt,
                 UpdatedAt = article.UpdatedAt
@@ -66,6 +71,9 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
             _context.Articles.Add(article);
             await _context.SaveChangesAsync();
 
+            // Recarrega com o Author incluso
+            await _context.Entry(article).Reference(a => a.Author).LoadAsync();
+
             return new ArticleDto
             {
                 Id = article.Id,
@@ -73,6 +81,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
                 Description = article.Description,
                 Content = article.Content,
                 AuthorId = article.AuthorId,
+                AuthorName = article.Author?.Nome,
                 CategoryId = article.CategoryId,
                 CreatedAt = article.CreatedAt,
                 UpdatedAt = article.UpdatedAt
@@ -81,7 +90,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
 
         public async Task<ArticleDto?> UpdateAsync(int id, ArticleCreateDto dto)
         {
-            var article = await _context.Articles.FindAsync(id);
+            var article = await _context.Articles.Include(a => a.Author).FirstOrDefaultAsync(a => a.Id == id);
             if (article == null) return null;
 
             article.Title = dto.Title;
@@ -100,6 +109,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
                 Description = article.Description,
                 Content = article.Content,
                 AuthorId = article.AuthorId,
+                AuthorName = article.Author?.Nome,
                 CategoryId = article.CategoryId,
                 CreatedAt = article.CreatedAt,
                 UpdatedAt = article.UpdatedAt

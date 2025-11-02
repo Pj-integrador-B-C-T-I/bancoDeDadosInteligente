@@ -12,4 +12,4 @@ WORKDIR /app
 COPY --from=build /app/out ./
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://+:80
-ENTRYPOINT ["dotnet", "BancoDeConhecimentoInteligente_backend.dll"]
+ENTRYPOINT ["dotnet", "BancoDeConhecimentoInteligente.dll"]

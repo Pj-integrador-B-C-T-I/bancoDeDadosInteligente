@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_secure_password
+      POSTGRES_DB: BancoDeConhecimentoInteligentedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bcti-network
+
+  bcti_api:
+    build:
+      context: ./backend/bcti-api
+      dockerfile: Dockerfile
+    container_name: bcti_api
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=BancoDeConhecimentoInteligentedb;Username=postgres;Password=your_secure_password"
+    networks:
+      - bcti-network
+
+  ai_api:
+    build:
+      context: ./bcti-ai/ai_api
+      dockerfile: Dockerfile
+    container_name: ai_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ollama
+      - postgres
+    environment:
+      OLLAMA_API_URL: http://ollama:11434
+      DATABASE_URL: postgresql://postgres:your_secure_password@postgres:5432/BancoDeConhecimentoInteligentedb
+    networks:
+      - bcti-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11435:11434"
+    environment:
+      OLLAMA_INTEL_GPU: "false"
+    volumes:
+      - ./ollama_data:/root/.ollama
+    networks:
+      - bcti-network
+
+networks:
+  bcti-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

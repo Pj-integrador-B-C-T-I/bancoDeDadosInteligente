@@ -1,5 +1,4 @@
 using BancoDeConhecimentoInteligenteAPI.Dtos.Chat;
-using BancoDeConhecimentoInteligenteAPI.Models;
 using BancoDeConhecimentoInteligenteAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +27,6 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReadChatDto>>> GetAll()
         {
-            // Retorna todos os chats (opcional)
             return Ok(await _chatService.GetAllChatsAsync());
         }
 
@@ -51,7 +49,8 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
         [HttpPatch("{id}/title")]
         public async Task<ActionResult<ReadChatDto>> UpdateTitle(int id, [FromBody] UpdateChatDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Title)) return BadRequest("O título não pode ser vazio.");
+            if (string.IsNullOrWhiteSpace(dto.Title))
+                return BadRequest("O título não pode ser vazio.");
 
             var updatedChat = await _chatService.UpdateChatTitleAsync(id, dto.Title);
             if (updatedChat == null) return NotFound("Chat não encontrado.");
@@ -65,6 +64,16 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
             var removed = await _chatService.RemoveChatAsync(id);
             if (!removed) return NotFound();
             return NoContent();
+        }
+
+        [HttpGet("{id}/history")]
+        public async Task<ActionResult<ChatHistoryDto>> GetChatHistory(int id)
+        {
+            var chatHistory = await _chatService.GetChatHistoryForClientAsync(id);
+            if (chatHistory == null)
+                return NotFound("Chat não encontrado.");
+
+            return Ok(chatHistory);
         }
     }
 }

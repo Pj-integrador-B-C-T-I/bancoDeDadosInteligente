@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using DotNetEnv;
+using BancoDeConhecimentoInteligenteAPI.Services.Interfaces;
 
 Env.Load();
 
@@ -29,14 +30,19 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChatMessageService, ChatMessageService>();
-
+builder.Services.AddScoped<IEmbeddingService, EmbeddingService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ILogReportService, LogReportService>();
+builder.Services.AddScoped<IAnswerService, AnswerService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 // Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowedFrontend",
     policy =>
     {
-        policy.WithOrigins("http://192.168.15.70:3000", "http://localhost:3000")
+        policy.WithOrigins("http://192.168.15.70:3000", "http://localhost:3000", "http://localhost:8000")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
