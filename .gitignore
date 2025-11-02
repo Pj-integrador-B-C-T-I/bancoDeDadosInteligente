@@ -38,3 +38,5 @@ Thumbs.db
 # Ollama keys
 ollama_data/id_ed25519
 ollama_data/id_ed25519.pub
+ollama_data/*
+*/ollama_data/*
