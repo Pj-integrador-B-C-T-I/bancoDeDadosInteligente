@@ -4,15 +4,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/chat/Sidebar";
-import InputNewMessage from "@/components/chat/inputNewMessage";
+import InputContinueMessage from "@/components/chat/InputContinueMessage";
 import ChatMessage from "@/components/chat/chatMessage";
+import LoaderDots from "@/components/shared/LoaderDots";
 
 interface Message {
   id: number;
-  chatId: number;
   question: string;
   answer: string;
+}
+
+interface ChatHistory {
+  id: number;
+  userId: number;
+  title: string;
   createdAt: string;
+  messages: Message[];
 }
 
 export default function ChatPage() {
@@ -22,14 +29,13 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Carregar mensagens do chat
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch(`http://localhost:5184/api/ChatMessage/chat/${chatId}`);
-        if (!res.ok) throw new Error("Erro ao buscar mensagens");
-        const data: Message[] = await res.json();
-        setMessages(data);
+        const res = await fetch(`http://localhost:5184/api/Chat/${chatId}/history`);
+        if (!res.ok) throw new Error("Erro ao buscar histórico do chat");
+        const data: ChatHistory = await res.json();
+        setMessages(data.messages || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -40,75 +46,80 @@ export default function ChatPage() {
     if (chatId) fetchMessages();
   }, [chatId]);
 
-  // Envia nova pergunta e atualiza título do chat se for a primeira mensagem
-  const handleNewMessage = async (question: string) => {
-    const tempId = Date.now();
 
-    // Adiciona mensagem temporária
-    setMessages((prev) => [
-      ...prev,
-      { id: tempId, chatId, question, answer: "Carregando...", createdAt: new Date().toISOString() },
-    ]);
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
 
-    try {
-      // Cria mensagem no backend
-      const res = await fetch("http://localhost:5184/api/ChatMessage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chatId, question, answer: "Carregando..." }),
-      });
-      const data: Message = await res.json();
-
-      // Atualiza mensagem temporária
-      setMessages((prev) =>
-        prev.map((m) => (m.id === tempId ? { ...m, id: data.id, answer: data.answer } : m))
-      );
-
-      // Se for a primeira mensagem do chat, atualiza o título do chat
-      if (messages.length === 0) {
-        const title = question.length > 20 ? question.slice(0, 20) + "..." : question;
-
-        await fetch(`http://localhost:5184/api/Chat/${chatId}/title`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title }),
-        });
-
-        // Opcional: atualizar Sidebar ou estado local de chats
+    const fetchMessages = async () => {
+      try {
+        const res = await fetch(`http://localhost:5184/api/Chat/${chatId}/history`);
+        if (!res.ok) throw new Error("Erro ao buscar histórico do chat");
+        const data: ChatHistory = await res.json();
+        setMessages(data.messages || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error(err);
-      setMessages((prev) =>
-        prev.map((m) => (m.id === tempId ? { ...m, answer: "Erro ao enviar" } : m))
-      );
+    };
+
+    if (chatId) {
+      fetchMessages(); // Busca inicial
+      interval = setInterval(fetchMessages, 3000); // Busca a cada 3 segundos
     }
-  };
+
+    return () => clearInterval(interval); // Limpa o intervalo ao desmontar
+  }, [chatId]);
 
   return (
-    <div className="w-screen h-screen flex flex-col">
-      <Navbar />
-      <div className="flex flex-row w-screen h-screen">
+    <div className="w-screen h-screen flex flex-col overflow-y-hidden">
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navbar />
+      </div>
+      <div className="flex flex-row w-screen h-full pt-16">
         <Sidebar />
-        <div className="flex flex-col w-10/12">
-          <div className="flex h-10/12 items-center justify-center overflow-y-auto">
-            <div className="flex flex-col h-10/12 w-6/12 p-6 gap-3">
-              {loading ? (
-                <p>Carregando mensagens...</p>
-              ) : messages.length === 0 ? (
-                <p>Nenhuma mensagem encontrada</p>
-              ) : (
-                messages.map((m) => (
-                  <div key={m.id} className="flex flex-col gap-1">
-                    <ChatMessage message={m.question} isQuestion />
+        
+        {/* Área do chat */}
+        <div className="flex flex-col w-10/12 relative h-full">
+          {/* Mensagens roláveis */}
+          <div className="flex-1 overflow-y-auto p-6">
+            {loading ? (
+              <p>Carregando mensagens...</p>
+            ) : messages.length === 0 ? (
+              <p>Nenhuma mensagem encontrada</p>
+            ) : (
+              messages.map((m, idx) => (
+                <div key={idx} className="flex flex-col gap-1 mb-4">
+                  <ChatMessage message={m.question} isQuestion />
+                  {m.answer === "Resposta gerada automaticamente" ? (
+                    // Loader no lugar da resposta
+                    <div className="flex justify-start ml-4">
+                      <LoaderDots />
+                    </div>
+                  ) : (
                     <ChatMessage message={m.answer} isQuestion={false} />
-                  </div>
-                ))
-              )}
-            </div>
+                  )}
+                </div>
+              ))
+            )}
           </div>
 
-          <div className="flex h-2/12">
-            <InputNewMessage onNewMessage={handleNewMessage} />
+
+          {/* Input fixado */}
+          <div className="w-full bg-gray-100 p-4 ">
+            <InputContinueMessage
+              onNewMessage={(tempId, question, answer) => {
+                setMessages(prev => [
+                  ...prev,
+                  { id: tempId, question, answer: answer || "" }
+                ]);
+              }}
+              onUpdateAnswer={(tempId, answer) => {
+                setMessages(prev =>
+                  prev.map(m => (m.id === tempId ? { ...m, answer } : m))
+                );
+              }}
+            />
           </div>
         </div>
       </div>
