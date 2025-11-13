@@ -12,16 +12,13 @@ using BancoDeConhecimentoInteligenteAPI.Services.Interfaces;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Configuration.AddEnvironmentVariables();
 
-string sendGridKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-
-// EF Core
+// 🔹 Banco de dados
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Services
+// 🔹 Injeções de dependência
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, SendGridEmailService>();
 builder.Services.AddScoped<IChatHistoryService, ChatHistoryService>();
@@ -36,22 +33,32 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ILogReportService, LogReportService>();
 builder.Services.AddScoped<IAnswerService, AnswerService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
-// Cors
+
+// 🔹 CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowedFrontend",
-    policy =>
+    options.AddPolicy("AllowedFrontend", policy =>
     {
-        policy.WithOrigins("http://192.168.15.70:3000", "http://localhost:3000", "http://localhost:8000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy
+            .WithOrigins(
+                "http://localhost:3000",
+                "http://localhost:8000",
+                "http://192.168.15.70:3000"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
-// Swagger
+// 🔹 Swagger
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BancoDeConhecimentoInteligenteAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "BancoDeConhecimentoInteligenteAPI",
+        Version = "v1"
+    });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -79,7 +86,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Autenticação JWT
+// 🔹 JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -99,16 +106,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Autorização
+// 🔹 Controllers e Authorization
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Swagger: habilita em dev OU se variável ENABLE_SWAGGER=true
-bool enableSwagger = app.Environment.IsDevelopment() ||
-                     Environment.GetEnvironmentVariable("ENABLE_SWAGGER")?.ToLower() == "true";
+// 🔹 NÃO use HTTPS redirection no Render (causa erro de porta)
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
+
+// 🔹 Swagger habilitado em Dev ou quando ENABLE_SWAGGER=true
+bool enableSwagger =
+    app.Environment.IsDevelopment() ||
+    Environment.GetEnvironmentVariable("ENABLE_SWAGGER")?.ToLower() == "true";
 
 if (enableSwagger)
 {
@@ -116,16 +129,23 @@ if (enableSwagger)
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "BancoDeConhecimentoInteligenteAPI v1");
-        c.RoutePrefix = "swagger"; // acessa via /swagger
+        c.RoutePrefix = "swagger";
     });
 }
 
-app.UseHttpsRedirection();
+// 🔹 Middleware padrão
 app.UseCors("AllowedFrontend");
-
 app.UseAuthentication();
 app.UseAuthorization();
 
+// 🔹 Rotas
 app.MapControllers();
-app.Run();
 
+// 🔹 Adiciona resposta para "/"
+app.MapGet("/", () => Results.Json(new
+{
+    message = "Banco de Conhecimento Inteligente API 🚀",
+    swagger = "/swagger"
+}));
+
+app.Run();
