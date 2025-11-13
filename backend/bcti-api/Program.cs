@@ -106,10 +106,18 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Swagger: habilita em dev OU se variável ENABLE_SWAGGER=true
+bool enableSwagger = app.Environment.IsDevelopment() ||
+                     Environment.GetEnvironmentVariable("ENABLE_SWAGGER")?.ToLower() == "true";
+
+if (enableSwagger)
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "BancoDeConhecimentoInteligenteAPI v1");
+        c.RoutePrefix = "swagger"; // acessa via /swagger
+    });
 }
 
 app.UseHttpsRedirection();
@@ -120,3 +128,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
+
