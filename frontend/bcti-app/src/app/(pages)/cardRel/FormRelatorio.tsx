@@ -1,9 +1,101 @@
-import React, { FC, FormEvent } from "react";
+"use client";
+
+import React, { FC, FormEvent, useEffect, useState } from "react";
 
 const FormRelatorio: FC = () => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
+
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    content: "",
+    categoryId: "",
+  });
+
+  const authorId =
+    typeof window !== "undefined"
+      ? Number(localStorage.getItem("userId"))
+      : null;
+
+  // ==================================
+  // GET /api/Category
+  // ==================================
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch("http://localhost:5184/api/Category");
+      if (!res.ok) throw new Error("Erro ao carregar categorias");
+
+      const data = await res.json();
+      setCategories(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  // ==================================
+  // Submit POST /api/Article
+  // ==================================
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Formulário enviado!");
+
+    if (!authorId) {
+      alert("Autor não identificado!");
+      return;
+    }
+
+    if (!form.categoryId) {
+      alert("Selecione uma categoria!");
+      return;
+    }
+
+    setSaving(true);
+
+    try {
+      const response = await fetch("http://localhost:5184/api/Article", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "*/*",
+        },
+        body: JSON.stringify({
+          title: form.title,
+          description: form.description,
+          content: form.content,
+          authorId: authorId,
+          categoryId: Number(form.categoryId),
+        }),
+      });
+
+      if (!response.ok) throw new Error("Erro ao criar artigo");
+
+      const created = await response.json();
+      console.log("Criado:", created);
+
+      alert("Artigo/Relatório criado com sucesso!");
+
+      setForm({
+        title: "",
+        description: "",
+        content: "",
+        categoryId: "",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao criar artigo");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -19,6 +111,8 @@ const FormRelatorio: FC = () => {
           placeholder="Título*"
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
         />
 
         {/* Campo: Descrição */}
@@ -27,42 +121,49 @@ const FormRelatorio: FC = () => {
           rows={3}
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           required
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         ></textarea>
 
-        {/* Linha com Categoria e Complemento */}
+        {/* Campo: Conteúdo */}
+        <textarea
+          placeholder="Conteúdo completo*"
+          rows={5}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          required
+          value={form.content}
+          onChange={(e) => setForm({ ...form, content: e.target.value })}
+        ></textarea>
+
+        {/* Categorias */}
         <div className="flex gap-3">
           <select
-            className="w-1/2 border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
+            value={form.categoryId}
+            onChange={(e) =>
+              setForm({ ...form, categoryId: e.target.value })
+            }
           >
-            <option value="">Categoria*</option>
-            <option value="Relatório">Relatório</option>
-            <option value="Artigo">Artigo</option>
-            <option value="Outro">Outro</option>
+            <option value="">
+              {loadingCategories ? "Carregando categorias..." : "Categoria*"}
+            </option>
+
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
           </select>
-
-          <input
-            type="text"
-            placeholder="Complemento"
-            className="w-1/2 border border-gray-300 rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
         </div>
-
-        {/* Campo Upload */}
-        <label
-          htmlFor="upload"
-          className="block border border-gray-300 rounded-md px-3 py-3 text-gray-400 text-sm text-center cursor-pointer hover:bg-gray-50 transition"
-        >
-          Upload de Arquivos
-        </label>
-        <input id="upload" type="file" className="hidden" />
 
         {/* Botão Adicionar */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition font-medium"
+          disabled={saving}
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition font-medium disabled:bg-gray-400"
         >
-          Adicionar
+          {saving ? "Enviando..." : "Adicionar"}
         </button>
       </form>
     </div>

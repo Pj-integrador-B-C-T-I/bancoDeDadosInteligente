@@ -8,6 +8,7 @@ interface InputFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export default function InputField({
@@ -16,6 +17,7 @@ export default function InputField({
   value,
   onChange,
   placeholder,
+  disabled = false,
 }: InputFieldProps) {
   return (
     <div className="flex flex-col mb-4 w-full">
@@ -25,7 +27,10 @@ export default function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        disabled={disabled}
+        className={`border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+          disabled ? "bg-gray-100 cursor-not-allowed" : ""
+        }`}
       />
     </div>
   );
