@@ -167,17 +167,15 @@ Para profissionais de TI da CTI, o BCTI é um sistema de gerenciamento de conhec
 - **RF04**: Chat inteligente  
 
 ## **Requisitos Não Funcionais**
-- **RNF01**: Resposta da busca < 10s  
-- **RNF02**: Suporte a 30 usuários simultâneos  
-- **RNF03**: Compatível com Chrome, Firefox, Edge, mobile  
-- **RNF04**: Disponibilidade comercial  
+- **RNF01**: Suporte a 30 usuários simultâneos  
+- **RNF02**: Compatível com Chrome, Firefox, Edge, mobile  
+- **RNF03**: Disponibilidade comercial  
 
 ---
 
 #  **Características de Qualidade**
 - **Usabilidade:** Interface intuitiva  
 - **Confiabilidade:** Disponibilidade comercial  
-- **Desempenho:** Resposta de até 5s  
 - **Segurança:** Login e senha  
 - **Portabilidade:** Navegadores modernos  
 
