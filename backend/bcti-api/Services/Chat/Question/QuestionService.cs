@@ -32,7 +32,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services
             var answer = new Answer
             {
                 QuestionId = question.Id,
-                Content = "Resposta gerada automaticamente (placeholder)"
+                Content = "Resposta gerada automaticamente"
             };
 
             _context.Answers.Add(answer);

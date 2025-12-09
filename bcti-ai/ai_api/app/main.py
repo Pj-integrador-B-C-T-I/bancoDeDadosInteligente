@@ -4,11 +4,31 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import requests
 import jwt
+import json
+from fastapi.responses import StreamingResponse
+
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.services.embedding_service import generate_embedding, gerar_embeddings_para_artigos, get_all_embeddings
 from app.services.chat_service import generate_response, chat_with_semantic
 
 app = FastAPI(title="BCTI AI Chat")
+
+# ⚡ Configuração CORS
+origins = [
+    "http://localhost:3000",  # front-end React
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",  # se for acessar de outra rota
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # permitir front-end
+    allow_credentials=True,
+    allow_methods=["*"],         # permite GET, POST, OPTIONS, PATCH, etc
+    allow_headers=["*"],         # permite Authorization, Content-Type, etc
+)
+
 DOTNET_API_URL = "http://bcti_api/api"  # URL do backend .NET
 
 security = HTTPBearer()
@@ -39,6 +59,14 @@ def gerar_todos_embeddings():
 def chat(req: ChatRequest):
     resp = generate_response(req.question, req.context)
     return {"answer": resp}
+
+
+
+# ✅ Nova rota GET para listar todos embeddings
+@app.get("/api/embedding")
+def listar_embeddings():
+    embeddings = get_all_embeddings()
+    return {"count": len(embeddings), "embeddings": embeddings}
 
 
 @app.post("/api/chat/semantic")
@@ -91,9 +119,94 @@ def chat_semantic(req: ChatRequest, credentials: HTTPAuthorizationCredentials = 
     }
 
 
+@app.post("/api/chat/semantic/{chat_id}")
+def continue_chat_semantic(chat_id: int, req: ChatRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """
+    Continua uma conversa existente (usa chat_id existente).
+    Cria apenas nova pergunta e resposta.
+    """
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, options={"verify_signature": False})
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"Token inválido: {e}")
 
-# ✅ Nova rota GET para listar todos embeddings
-@app.get("/api/embedding")
-def listar_embeddings():
-    embeddings = get_all_embeddings()
-    return {"count": len(embeddings), "embeddings": embeddings}
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # Criar nova pergunta para o chat existente
+    question_payload = {"chatId": chat_id, "content": req.question}
+    question_resp = requests.post(f"{DOTNET_API_URL}/Question", json=question_payload, headers=headers)
+    question_resp.raise_for_status()
+    question_data = question_resp.json()
+    question_id = question_data["id"]
+
+    # Gerar resposta
+    answer_content = chat_with_semantic(req.question)
+
+    # Atualizar resposta
+    patch_payload = {"content": answer_content}
+    patch_resp = requests.patch(f"{DOTNET_API_URL}/Answer/by-question/{question_id}", json=patch_payload, headers=headers)
+    patch_resp.raise_for_status()
+    patched_answer = patch_resp.json()
+
+    return {
+        "chat_id": chat_id,
+        "question": question_data,
+        "patched_answer": patched_answer,
+        "answer_generated": answer_content
+        
+    }
+
+
+def stream_response(user_input: str, context: str = "", model: str = "llama2"):
+    url = "http://ollama:11434/api/generate"
+    prompt = f"""
+Você é um assistente corporativo da CTI...
+Pergunta: {user_input}
+Contexto: {context}
+"""
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": True
+    }
+
+    with requests.post(url, json=payload, stream=True) as r:
+        for line in r.iter_lines():
+            if line:
+                data = json.loads(line.decode("utf-8"))
+                if "response" in data:
+                    yield data["response"]  # envia o token
+                if data.get("done"):
+                    break
+
+
+
+@app.post("/api/chat/semantic/stream/{chat_id}")
+def chat_semantic_stream(chat_id: int, req: ChatRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    payload = jwt.decode(token, options={"verify_signature": False})
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # cria pergunta no .NET
+    question_payload = {"chatId": chat_id, "content": req.question}
+    question_resp = requests.post(f"{DOTNET_API_URL}/Question", json=question_payload, headers=headers)
+    question_resp.raise_for_status()
+    question_data = question_resp.json()
+    question_id = question_data["id"]
+
+    def event_stream():
+        collected = ""
+        for token_text in stream_response(req.question):
+            collected += token_text
+            # envia cada token imediatamente
+            yield token_text
+            yield ""  # força o envio do chunk ao cliente
+        # após concluir, atualiza no .NET
+        patch_payload = {"content": collected}
+        requests.patch(f"{DOTNET_API_URL}/Answer/by-question/{question_id}", json=patch_payload, headers=headers)
+
+
+    return StreamingResponse(event_stream(), media_type="application/octet-stream")
+
+
