@@ -32,9 +32,9 @@ O **Banco de Conhecimento Técnico Inteligente** é um sistema web com:
 
 - Cadastro de artigos técnicos
 - Busca inteligente por linguagem natural
-- Categorização automática
+- Categorização 
 - Chat inteligente
-- Relatórios de uso
+- Relatórios de atividades
 
 ---
 
@@ -70,9 +70,9 @@ Para profissionais de TI da CTI, o BCTI é um sistema de gerenciamento de conhec
 ## **Principais Funcionalidades**
 - Cadastro e edição de artigos técnicos  
 - Sistema de busca inteligente  
-- Categorização automática por IA  
+- Categorização 
 - Chat inteligente  
-- Relatórios e métricas  
+- Relatórios  
 
 ---
 
@@ -88,7 +88,7 @@ Para profissionais de TI da CTI, o BCTI é um sistema de gerenciamento de conhec
 ## **Requisitos Funcionais**
 - **RF01**: Cadastro e edição de artigos  
 - **RF02**: Busca por palavra-chave  
-- **RF03**: Categorização automática  
+- **RF03**: Categorização   
 - **RF04**: Chat inteligente  
 
 ## **Requisitos Não Funcionais**
