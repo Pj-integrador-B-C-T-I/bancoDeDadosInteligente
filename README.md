@@ -8,6 +8,81 @@ Este documento define os requisitos, escopo e planejamento para o desenvolviment
 ### **Escopo do Produto**
 O BCTI será um sistema web com funcionalidades avançadas de IA para melhorar a busca e organização do conhecimento técnico da CTI. Ele será desenvolvido por 5 alunos do SENAI-SP e atenderá técnicos, analistas e gestores da organização.
 
+```
+/
+├── backend/                # Backend do projeto
+├── frontend/               # Frontend do projeto
+├── bcti-ai/                # Backend de IA
+├── docker-compose.yml      # Configuração para orquestração com Docker
+```
+
+### Backend
+- **Localização**: `backend/`
+- **Descrição**: Implementado em C#, fornece a API principal para o sistema.
+- **Documentação**: Consulte o arquivo [wiki-backend.md](backend/README.md) para mais detalhes.
+
+### Frontend
+- **Localização**: `frontend/bcti-app/`
+- **Descrição**: Implementado com Next.js, fornece a interface do usuário.
+- **Documentação**: Consulte o arquivo [wiki-frontend.md](frontend/README.md) para mais detalhes.
+
+### Inteligência Artificial
+- **Localização**: `bcti-ai/ai_api/`
+- **Descrição**: Implementado em Python, fornece funcionalidades de IA.
+- **Documentação**: Consulte o arquivo [wiki-backend.md](bcti-ai/README.md) para mais detalhes.
+
+## Configuração do Ambiente
+### Requisitos
+- Docker e Docker Compose instalados.
+- Node.js e npm para o frontend.
+- Python 3.8+ para o backend de IA.
+
+### Passos para Configuração
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/Pj-integrador-B-C-T-I/bancoDeDadosInteligente.git
+   ```
+
+2. Navegue até o diretório do projeto:
+
+   ```bash
+   cd bancoDeDadosInteligente
+   ```
+
+3. Configure e inicie os serviços com Docker Compose:
+
+   ```bash
+   docker-compose up
+   ```
+
+## Contribuindo
+Para contribuir com o projeto, siga estas etapas:
+
+1. Faça um fork do repositório.
+2. Crie uma nova branch para suas alterações:
+
+   ```bash
+   git checkout -b minha-feature
+   ```
+
+3. Faça commit das suas alterações:
+
+   ```bash
+   git commit -m "Descrição das alterações"
+   ```
+
+4. Envie suas alterações para o repositório remoto:
+
+   ```bash
+   git push origin minha-feature
+   ```
+
+5. Abra um Pull Request para revisão.
+
+## Contato
+Para dúvidas ou suporte, entre em contato com a equipe de desenvolvimento.
+=======
 ### **Visão Geral**
 Este documento apresenta o posicionamento, stakeholders, arquitetura, requisitos, riscos, cronograma, user stories e protótipo textual, conforme critérios do Projeto Integrador.
 
