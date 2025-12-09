@@ -19,17 +19,17 @@ O BCTI será um sistema web com funcionalidades avançadas de IA para melhorar a
 ### Backend
 - **Localização**: `backend/`
 - **Descrição**: Implementado em C#, fornece a API principal para o sistema.
-- **Documentação**: Consulte o arquivo [wiki-backend.md](backend/wiki-backend.md) para mais detalhes.
+- **Documentação**: Consulte o arquivo [wiki-backend.md](backend/README.md) para mais detalhes.
 
 ### Frontend
 - **Localização**: `frontend/bcti-app/`
 - **Descrição**: Implementado com Next.js, fornece a interface do usuário.
-- **Documentação**: Consulte o arquivo [wiki-frontend.md](frontend/wiki-frontend.md) para mais detalhes.
+- **Documentação**: Consulte o arquivo [wiki-frontend.md](frontend/README.md) para mais detalhes.
 
 ### Inteligência Artificial
 - **Localização**: `bcti-ai/ai_api/`
 - **Descrição**: Implementado em Python, fornece funcionalidades de IA.
-- **Documentação**: Consulte o arquivo [wiki-backend.md](bcti-ai/wiki-backend.md) para mais detalhes.
+- **Documentação**: Consulte o arquivo [wiki-backend.md](bcti-ai/README.md) para mais detalhes.
 
 ## Configuração do Ambiente
 ### Requisitos
