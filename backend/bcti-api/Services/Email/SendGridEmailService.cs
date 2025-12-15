@@ -91,7 +91,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services.Email
         public async Task EnviarConfirmacao(string email, string nome, string linkConfirmacao)
         {
             var client = new SendGridClient(_apiKey);
-            var from = new EmailAddress("bcti.no.reply@outlook.com", "CT.IA App");
+            var from = new EmailAddress("bct.ia@outlook.com", "CT.IA App");
             var to = new EmailAddress(email, nome);
             var subject = "Confirme seu cadastro na CT.IA";
             var htmlContent = GerarTemplateHtml(nome, "Confirme seu cadastro", "Clique no link abaixo para confirmar seu cadastro:", "Confirmar cadastro", linkConfirmacao);
@@ -110,7 +110,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Services.Email
         public async Task EnviarEmailAsync(string email, string nome, string titulo, string subtitulo, string textoBotao, string link)
         {
             var client = new SendGridClient(_apiKey);
-            var from = new EmailAddress("bcti.no.reply@outlook.com", "CT.IA App");
+            var from = new EmailAddress("bct.ia@outlook.com", "CT.IA App");
             var to = new EmailAddress(email);
             var plainTextContent = "Acesse o link via navegador para continuar.";
             var htmlContent = GerarTemplateHtml(nome, titulo, subtitulo, textoBotao, link);

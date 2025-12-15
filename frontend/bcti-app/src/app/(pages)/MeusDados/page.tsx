@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import InputField from "@/components/ui/InputField";
+import { toast } from "sonner";
 
 export default function MeusDados() {
   const [formData, setFormData] = useState({
@@ -93,11 +94,11 @@ export default function MeusDados() {
 
       if (!resp.ok) throw new Error("Erro ao atualizar usuário");
 
-      alert("Dados atualizados com sucesso!");
+      toast.success("Dados atualizados com sucesso!");
       setIsEditing(false); // Desabilitar campos após salvar
     } catch (err) {
       console.error(err);
-      alert("Erro ao atualizar dados.");
+      toast.error("Erro ao atualizar dados.");
     } finally {
       setSaving(false);
     }

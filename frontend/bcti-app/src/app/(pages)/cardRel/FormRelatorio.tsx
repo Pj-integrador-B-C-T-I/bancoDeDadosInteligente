@@ -1,6 +1,7 @@
 "use client";
 
 import React, { FC, FormEvent, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const FormRelatorio: FC = () => {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
@@ -50,12 +51,12 @@ const FormRelatorio: FC = () => {
     e.preventDefault();
 
     if (!authorId) {
-      alert("Autor não identificado!");
+      toast.error("Autor não identificado!");
       return;
     }
 
     if (!form.categoryId) {
-      alert("Selecione uma categoria!");
+      toast.success("Selecione uma categoria!");
       return;
     }
 
@@ -82,7 +83,7 @@ const FormRelatorio: FC = () => {
       const created = await response.json();
       console.log("Criado:", created);
 
-      alert("Artigo/Relatório criado com sucesso!");
+      toast.success("Artigo/Relatório criado com sucesso!");
 
       setForm({
         title: "",
@@ -92,7 +93,7 @@ const FormRelatorio: FC = () => {
       });
     } catch (err) {
       console.error(err);
-      alert("Erro ao criar artigo");
+      toast.error("Erro ao criar artigo");
     } finally {
       setSaving(false);
     }
