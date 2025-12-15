@@ -21,10 +21,14 @@ export default function MeusDados() {
   const [isEditing, setIsEditing] = useState(false);
 
   // PEGAR ID DO USUÁRIO (exemplo usando localStorage)
-  const userId =
-    typeof window !== "undefined" && localStorage.getItem("userId")
-      ? localStorage.getItem("userId")
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user") || "null")
       : null;
+
+  const userId = user?.id ?? null;
+
+  console.log("USER STORAGE:", user);
 
   useEffect(() => {
     if (!userId) {

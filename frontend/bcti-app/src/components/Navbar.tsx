@@ -99,7 +99,7 @@ export default function Navbar() {
 
   const menuItems = [
     { icon: Home, label: "Início", href: "/" },
-    { icon: User, label: "Minha Conta", href: "/MinhaConta", requiresAuth: true },
+    { icon: User, label: "Minha Conta", href: "/MeusDados", requiresAuth: true },
     {
       icon: BarChart3,
       label: "Relatórios",
