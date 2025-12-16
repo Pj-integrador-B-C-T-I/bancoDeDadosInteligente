@@ -35,6 +35,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.id.toString());
 
         // Salvar o usuário inteiro (nome, email, ativo, etc)
         localStorage.setItem("user", JSON.stringify(data));

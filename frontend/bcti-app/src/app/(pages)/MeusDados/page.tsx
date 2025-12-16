@@ -19,6 +19,7 @@ export default function MeusDados() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
 
   // PEGAR ID DO USUÁRIO (exemplo usando localStorage)
   const user =
@@ -26,14 +27,26 @@ export default function MeusDados() {
       ? JSON.parse(localStorage.getItem("user") || "null")
       : null;
 
-  const userId = user?.id ?? null;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("userId");
+
+      if (storedUserId) {
+        setUserId(parseInt(storedUserId, 10));
+        console.log("USER ID STORAGE:", storedUserId);
+      } else {
+        console.error("ID do usuário não encontrado no localStorage");
+      }
+
+      setLoading(false);
+    }
+  }, []);
 
   console.log("USER STORAGE:", user);
 
   useEffect(() => {
-    if (!userId) {
+    if (userId === null) {
       console.error("ID do usuário não encontrado.");
-      setLoading(false);
     }
   }, [userId]);
 

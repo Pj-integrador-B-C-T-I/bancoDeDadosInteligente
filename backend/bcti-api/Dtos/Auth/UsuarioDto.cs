@@ -25,6 +25,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Dtos.Auth
         public bool Ativo { get; set; }
         public bool EmailVerificado { get; set; }
         public string Tipo { get; set; } = "Cliente";
+        public int Id { get; set; } 
     }
 
     public class EsqueciMinhaSenhaDto
