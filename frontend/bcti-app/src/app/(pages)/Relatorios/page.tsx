@@ -53,7 +53,7 @@ export default function ArticlePage() {
 
       <div>
         <p
-          className="text-xl sm:text-2xl font-bold text-gray-400 text-center mt-6 mb-6 cursor-pointer hover:text-blue-600 transition"
+          className="text-xl sm:text-2xl font-bold text-gray-400 text-center mt-6 mb-6 cursor-pointer hover:text-gray-500 transition"
           onClick={() => setMostrarForm(true)}
         >
           Adicionar Novo Relatório

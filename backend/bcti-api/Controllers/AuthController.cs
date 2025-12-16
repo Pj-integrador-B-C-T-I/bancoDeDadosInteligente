@@ -87,6 +87,7 @@ namespace BancoDeConhecimentoInteligenteAPI.Controllers
 
                 return Ok(new AuthResponseDto
                 {
+                    Id = usuario.Id,
                     Nome = usuario.Nome,
                     Email = usuario.Email,
                     Token = token,

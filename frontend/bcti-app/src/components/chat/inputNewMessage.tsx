@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
+import { toast } from "sonner";
 
 export default function InputNewMessage() {
   const [input, setInput] = useState("");
@@ -16,7 +17,7 @@ export default function InputNewMessage() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Usuário não autenticado");
+      toast.error("Usuário não autenticado");
       setLoading(false);
       return;
     }
@@ -45,7 +46,7 @@ export default function InputNewMessage() {
       router.push(`/Chat/${data.chat.id}`);
     } catch (err: any) {
       console.error(err);
-      alert("❌ Erro ao enviar a pergunta.");
+      toast.error("❌ Erro ao enviar a pergunta.");
     } finally {
       setLoading(false);
       setInput("");

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 import LoadingCircle from "../shared/LoadingCircle";
+import { toast } from "sonner";
 
 
 interface InputContinueMessageProps {
@@ -24,7 +25,7 @@ export default function InputContinueMessage({ onNewMessage, onUpdateAnswer }: I
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Usuário não autenticado");
+      toast.error("Usuário não autenticado");
       setLoading(false);
       return;
     }

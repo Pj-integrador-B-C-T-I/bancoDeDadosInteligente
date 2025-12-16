@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import InputField from "@/components/ui/InputField";
+import { toast } from "sonner";
 
 export default function MeusDados() {
   const [formData, setFormData] = useState({
@@ -18,17 +19,34 @@ export default function MeusDados() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
 
   // PEGAR ID DO USUÁRIO (exemplo usando localStorage)
-  const userId =
-    typeof window !== "undefined" && localStorage.getItem("userId")
-      ? localStorage.getItem("userId")
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user") || "null")
       : null;
 
   useEffect(() => {
-    if (!userId) {
-      console.error("ID do usuário não encontrado.");
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("userId");
+
+      if (storedUserId) {
+        setUserId(parseInt(storedUserId, 10));
+        console.log("USER ID STORAGE:", storedUserId);
+      } else {
+        console.error("ID do usuário não encontrado no localStorage");
+      }
+
       setLoading(false);
+    }
+  }, []);
+
+  console.log("USER STORAGE:", user);
+
+  useEffect(() => {
+    if (userId === null) {
+      console.error("ID do usuário não encontrado.");
     }
   }, [userId]);
 
@@ -93,11 +111,11 @@ export default function MeusDados() {
 
       if (!resp.ok) throw new Error("Erro ao atualizar usuário");
 
-      alert("Dados atualizados com sucesso!");
+      toast.success("Dados atualizados com sucesso!");
       setIsEditing(false); // Desabilitar campos após salvar
     } catch (err) {
       console.error(err);
-      alert("Erro ao atualizar dados.");
+      toast.error("Erro ao atualizar dados.");
     } finally {
       setSaving(false);
     }

@@ -8,6 +8,7 @@ import ChatMessage from "@/components/chat/chatMessage";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 import LoadingCircle from "@/components/shared/LoadingCircle";
 import LoaderDots from "@/components/shared/LoaderDots";
+import { toast } from "sonner";
 
 interface Message {
   id: number;
@@ -28,7 +29,7 @@ export default function NewChatPage() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Usuário não autenticado");
+      toast.error("Usuário não autenticado");
       setLoading(false);
       return;
     }
